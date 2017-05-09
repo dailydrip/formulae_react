@@ -38,3 +38,9 @@ export function gotForm(form: FormType) {
     }
   };
 }
+
+export function addSection(section: SectionType,form_id: number) {
+  return dispatch => {
+    Section.create(section: section, form_id: form_id).then(console.log);
+  };
+}
