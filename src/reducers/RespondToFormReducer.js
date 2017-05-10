@@ -63,18 +63,6 @@ export default function RespondToFormReducer(
           questionType: action.payload.questionType
         })
       );
-    case "ADD_SECTION":
-      let sections = model.get("form").sections.push(
-        new SectionType({
-          name: "",
-          content: ""
-        })
-      );
-
-      let newForm = new FormType({
-        sections: sections
-      });
-      return new Model({ form: newForm });
     default:
       return model;
   }

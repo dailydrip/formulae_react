@@ -7,6 +7,16 @@ function addSection(section: SectionType, form_id: number) {
   };
 }
 
+function setSectionName(sectionId: number, name: string) {
+  return {
+    type: "SET_SECTION_NAME",
+    payload: {
+      sectionId,
+      name
+    }
+  };
+}
+
 function addQuestion(sectionId: number) {
   return {
     type: "ADD_QUESTION",
@@ -18,5 +28,6 @@ function addQuestion(sectionId: number) {
 
 export default {
   addSection,
+  setSectionName,
   addQuestion
 };

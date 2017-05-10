@@ -13,32 +13,43 @@ export default function AdministerFormReducer(
 ) {
   switch (action.type) {
     case "ADD_SECTION":
-      let sections = model.get("form").sections.push(
-        new SectionType({
-          name: "",
-          content: ""
-        })
-      );
-
-      let newForm = new FormType({
-        sections: sections
+      return model.updateIn(["form", "sections"], sections => {
+        return sections.push(
+          new SectionType({
+            name: "",
+            content: ""
+          })
+        );
       });
-      return new Model({ form: newForm });
+    case "SET_SECTION_NAME":
+      if (action.payload) {
+        let { sectionId, name } = action.payload;
+        return model.updateIn(["form", "sections"], sections => {
+          return sections.map(s => {
+            if (s.id == sectionId) {
+              return s.set("name", name);
+            } else {
+              return s;
+            }
+          });
+        });
+      } else {
+        return model;
+      }
     case "ADD_QUESTION":
       if (action.payload) {
         let { sectionId } = action.payload;
-        let sections = model.get("form").sections.map(s => {
-          if (s.id == sectionId) {
-            return s.questions.push(new QuestionType({}));
-          } else {
-            return s;
-          }
-        });
-
-        return model.updateIn(["form"], f => {
-          return f.set("sections", sections);
+        return model.updateIn(["form", "sections"], sections => {
+          return sections.map(s => {
+            if (s.id == sectionId) {
+              return s.set("questions", s.questions.push(new QuestionType({})));
+            } else {
+              return s;
+            }
+          });
         });
       } else {
+        return model;
       }
     default:
       return model;

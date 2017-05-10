@@ -13,7 +13,9 @@ export const AdministerForm = connect(
       addSection: (section, form_id) =>
         dispatch(AdministerFormActions.addSection(section, form_id)),
       addQuestion: sectionId =>
-        dispatch(AdministerFormActions.addQuestion(sectionId))
+        dispatch(AdministerFormActions.addQuestion(sectionId)),
+      setSectionName: (sectionId, name) =>
+        dispatch(AdministerFormActions.setSectionName(sectionId, name))
     };
   }
 )(components.AdministerForm);

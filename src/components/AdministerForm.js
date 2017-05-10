@@ -15,7 +15,8 @@ type Props = {
   form: FormType,
   getForm: Function,
   addSection: Function,
-  addQuestion: Function
+  addQuestion: Function,
+  setSectionName: Function
 };
 
 function createSection(addSection) {
@@ -23,9 +24,14 @@ function createSection(addSection) {
 }
 
 export default function AdministerForm(props: Props) {
-  const { form, addSection, addQuestion } = props;
+  const { form, addSection, setSectionName, addQuestion } = props;
   const sectionsToRender = form.sections.map((s, i) => (
-    <SectionAdmin addQuestion={addQuestion} section={s} key={i} />
+    <SectionAdmin
+      addQuestion={addQuestion}
+      setSectionName={setSectionName}
+      section={s}
+      key={i}
+    />
   ));
   return (
     <div>
