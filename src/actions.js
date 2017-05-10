@@ -1,4 +1,4 @@
-import { Form, FormSubmission } from "./api";
+import { Form, Section, FormSubmission } from "./api";
 import { FormType } from "./types";
 
 export function setQuestionSubmission(key, value, questionType) {
@@ -39,8 +39,11 @@ export function gotForm(form: FormType) {
   };
 }
 
-export function addSection(section: SectionType,form_id: number) {
-  return dispatch => {
-    Section.create(section: section, form_id: form_id).then(console.log);
+export function addSection(section: SectionType, form_id: number) {
+  return {
+    type: "ADD_SECTION"
   };
+  // return dispatch => {
+  // Section.create((section: section), (form_id: form_id)).then(console.log);
+  //};
 }

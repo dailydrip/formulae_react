@@ -58,6 +58,18 @@ export default function reducer(model: Model = init, action: { type: Action }) {
           questionType: action.payload.questionType
         })
       );
+    case "ADD_SECTION":
+      let sections = model.get("form").sections.push(
+        new SectionType({
+          name: `Name${new Date().toString()}`,
+          content: "Content"
+        })
+      );
+
+      let newForm = new FormType({
+        sections: sections
+      });
+      return new Model({ form: newForm });
     default:
       return model;
   }

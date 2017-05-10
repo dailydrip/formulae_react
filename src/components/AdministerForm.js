@@ -2,42 +2,42 @@
 
 import React from "react";
 import Section from "./RespondToForm/Section";
+import SectionAdmin from "./AdministerForm/SectionAdmin";
 import { List, Map } from "immutable";
 import {
   SectionType,
   FormType,
   QuestionSubmissionType,
-  FormSubmissionType,
+  FormSubmissionType
 } from "../types";
 
 type Props = {
   form: FormType,
+  getForm: Function,
   addSection: Function
 };
 
-function createSection(name, content, addSection, formId){
-  let section = new SectionType(name, content)
-  addSection(section, formId)
+function createSection(addSection) {
+  addSection();
 }
 
 export default function AdministerForm(props: Props) {
   const {
     form,
-    addSection,
+    addSection
   } = props;
-
-  const sections = form.get("sections")
-
+  const sectionsToRender = form.sections ? form.sections.toString() : "";
   return (
     <div>
       <h2> Administer Form </h2>
       <div>
-        <input type="text" name="name" />
-        <input type="text" name="content" />
-        <button onClick={() => createSection(name, content, addSection, form.id)}>Add Section</button>
+        <h3> Sections </h3>
+        <button onClick={() => addSection()}>
+          Add Section
+        </button>
+        {sectionsToRender}
       </div>
       <hr />
-      {sections}
     </div>
   );
 }
