@@ -17,6 +17,16 @@ function setSectionName(sectionId: number, name: string) {
   };
 }
 
+function setSectionContent(sectionId: number, content: string) {
+  return {
+    type: "SET_SECTION_CONTENT",
+    payload: {
+      sectionId,
+      content
+    }
+  };
+}
+
 function addQuestion(sectionId: number) {
   return {
     type: "ADD_QUESTION",

@@ -36,6 +36,21 @@ export default function AdministerFormReducer(
       } else {
         return model;
       }
+    case "SET_SECTION_CONTENT":
+      if (action.payload) {
+        let { sectionId, content } = action.payload;
+        return model.updateIn(["form", "sections"], sections => {
+          return sections.map(s => {
+            if (s.id == sectionId) {
+              return s.set("content", content);
+            } else {
+              return s;
+            }
+          });
+        });
+      } else {
+        return model;
+      }
     case "ADD_QUESTION":
       if (action.payload) {
         let { sectionId } = action.payload;

@@ -6,11 +6,12 @@ import { SectionType } from "../../types";
 type Props = {
   section: SectionType,
   addQuestion: Function,
-  setSectionName: Function
+  setSectionName: Function,
+  setSectionContent: Function
 };
 
 export default function SectionAdmin(props: Props) {
-  const { section, addQuestion, setSectionName } = props;
+  const { section, addQuestion, setSectionName, setSectionContent } = props;
   return (
     <div>
       <button onClick={() => addQuestion(section.id)}>
@@ -22,7 +23,12 @@ export default function SectionAdmin(props: Props) {
         name="name"
         onChange={e => setSectionName(section.id, e.target.value)}
       />
-      <input type="text" value={section.content} name="content" />
+      <input
+        type="text"
+        value={section.content}
+        name="content"
+        onChange={e => setSectionContent(section.id, e.target.value)}
+      />
     </div>
   );
 }
