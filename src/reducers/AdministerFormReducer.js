@@ -6,13 +6,14 @@ import {
   SectionType,
   QuestionType,
   QuestionSubmissionType
-} from "./types";
+} from "../types";
 import { List } from "immutable";
 
 const init = new Model();
 
 // FIXME: Remove this eventually but for now it makes it easy to do some testing
 const firstSection: SectionType = new SectionType({
+  id: "1",
   title: "First",
   order: 1,
   content: "This is the content",
@@ -32,6 +33,7 @@ const firstSection: SectionType = new SectionType({
   ])
 });
 const secondSection: SectionType = new SectionType({
+  id: "2",
   title: "Second",
   content: "This is the content",
   order: 2
@@ -43,7 +45,10 @@ const exampleForm = new FormType({
 
 type Action = "LOAD_EXAMPLE_FORM" | "GET_API_FORM" | "GOT_API_FORM";
 
-export default function reducer(model: Model = init, action: { type: Action }) {
+export default function AdministerFormReducer(
+  model: Model = init,
+  action: { type: Action }
+) {
   switch (action.type) {
     case "LOAD_EXAMPLE_FORM":
       return new Model({ form: exampleForm });
@@ -61,8 +66,8 @@ export default function reducer(model: Model = init, action: { type: Action }) {
     case "ADD_SECTION":
       let sections = model.get("form").sections.push(
         new SectionType({
-          name: `Name${new Date().toString()}`,
-          content: "Content"
+          name: "",
+          content: ""
         })
       );
 

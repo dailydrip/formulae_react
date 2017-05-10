@@ -22,20 +22,19 @@ function createSection(addSection) {
 }
 
 export default function AdministerForm(props: Props) {
-  const {
-    form,
-    addSection
-  } = props;
-  const sectionsToRender = form.sections ? form.sections.toString() : "";
+  const { form, addSection } = props;
+  const sectionsToRender = form.sections.map((s, i) => (
+    <SectionAdmin section={s} key={i} />
+  ));
   return (
     <div>
-      <h2> Administer Form </h2>
+      <h2>Administer Form</h2>
       <div>
-        <h3> Sections </h3>
+        <h3>Sections</h3>
+        {sectionsToRender}
         <button onClick={() => addSection()}>
           Add Section
         </button>
-        {sectionsToRender}
       </div>
       <hr />
     </div>

@@ -1,18 +1,18 @@
 // @flow
 
 import React from "react";
+import { SectionType } from "../../types";
 
 type Props = {
-  name: ?string,
-  content: ?string
+  section: SectionType
 };
 
 export default function SectionAdmin(props: Props) {
-  const { name, content } = props;
+  const { section } = props;
   return (
     <div>
-      <input type="text" value={name} name="name" />
-      <input type="text" value={content} name="content" />
+      <input type="text" value={section.name} name="name" />
+      <input type="text" value={section.content} name="content" />
     </div>
   );
 }
