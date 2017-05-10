@@ -7,6 +7,16 @@ function addSection(section: SectionType, form_id: number) {
   };
 }
 
+function addQuestion(sectionId: number) {
+  return {
+    type: "ADD_QUESTION",
+    payload: {
+      sectionId
+    }
+  };
+}
+
 export default {
-  addSection
+  addSection,
+  addQuestion
 };

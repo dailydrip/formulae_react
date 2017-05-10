@@ -4,15 +4,15 @@ import React from "react";
 import { SectionType } from "../../types";
 
 type Props = {
-  section: SectionType
+  section: SectionType,
+  addQuestion: Function
 };
 
-function addQuestion() {}
 export default function SectionAdmin(props: Props) {
-  const { section } = props;
+  const { section, addQuestion } = props;
   return (
     <div>
-      <button onClick={() => addQuestion()}>
+      <button onClick={() => addQuestion(section.id)}>
         Add Question
       </button>
       <input type="text" value={section.name} name="name" />

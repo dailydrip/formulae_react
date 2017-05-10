@@ -11,7 +11,9 @@ export const AdministerForm = connect(
   function mapDispatchToProps(dispatch) {
     return {
       addSection: (section, form_id) =>
-        dispatch(AdministerFormActions.addSection(section, form_id))
+        dispatch(AdministerFormActions.addSection(section, form_id)),
+      addQuestion: sectionId =>
+        dispatch(AdministerFormActions.addQuestion(sectionId))
     };
   }
 )(components.AdministerForm);
