@@ -33,6 +33,7 @@ export default function AdministerForm(props: Props) {
     setSectionName,
     setSectionContent,
     addQuestion,
+    setQuestionType,
     setQuestionKey,
     setQuestionLabel
   } = props;
@@ -41,6 +42,7 @@ export default function AdministerForm(props: Props) {
       setSectionName={setSectionName}
       setSectionContent={setSectionContent}
       addQuestion={addQuestion}
+      setQuestionType={setQuestionType}
       setQuestionKey={setQuestionKey}
       setQuestionLabel={setQuestionLabel}
       section={s}

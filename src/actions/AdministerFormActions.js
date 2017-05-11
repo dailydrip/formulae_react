@@ -47,6 +47,17 @@ function setQuestionKey(sectionId: number, questionId: number, key: string) {
   };
 }
 
+function setQuestionType(sectionId: number, questionId: number, type: string) {
+  return {
+    type: "SET_QUESTION_TYPE",
+    payload: {
+      sectionId,
+      questionId,
+      type
+    }
+  };
+}
+
 function setQuestionLabel(
   sectionId: number,
   questionId: number,
@@ -68,5 +79,6 @@ export default {
   setSectionContent,
   addQuestion,
   setQuestionKey,
+  setQuestionType,
   setQuestionLabel
 };

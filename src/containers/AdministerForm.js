@@ -12,12 +12,16 @@ export const AdministerForm = connect(
     return {
       addSection: (section, form_id) =>
         dispatch(AdministerFormActions.addSection(section, form_id)),
-      addQuestion: sectionId =>
-        dispatch(AdministerFormActions.addQuestion(sectionId)),
       setSectionName: (sectionId, name) =>
         dispatch(AdministerFormActions.setSectionName(sectionId, name)),
       setSectionContent: (sectionId, content) =>
         dispatch(AdministerFormActions.setSectionContent(sectionId, content)),
+      addQuestion: sectionId =>
+        dispatch(AdministerFormActions.addQuestion(sectionId)),
+      setQuestionType: (sectionId, questionId, type) =>
+        dispatch(
+          AdministerFormActions.setQuestionType(sectionId, questionId, type)
+        ),
       setQuestionKey: (sectionId, questionId, key) =>
         dispatch(
           AdministerFormActions.setQuestionKey(sectionId, questionId, key)

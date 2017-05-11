@@ -6,12 +6,19 @@ import { QuestionType } from "../../types";
 type Props = {
   section: Object,
   question: QuestionType,
+  setQuestionType: Function,
   setQuestionKey: Function,
   setQuestionLabel: Function
 };
 
 export default function QuestionAdmin(props: Props) {
-  const { section, question, setQuestionKey, setQuestionLabel } = props;
+  const {
+    section,
+    question,
+    setQuestionType,
+    setQuestionKey,
+    setQuestionLabel
+  } = props;
   return (
     <div className="question">
       <input

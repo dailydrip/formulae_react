@@ -71,6 +71,22 @@ export default function AdministerFormReducer(
       } else {
         return model;
       }
+    case "SET_QUESTION_TYPE":
+      if (action.payload) {
+        let { sectionId, questionId, type } = action.payload;
+        return model.updateIn(["form", "sections"], sections => {
+          return sections.map(s => {
+            if (s.id == sectionId) {
+              let index = s.questions.findIndex(q => q.id == questionId);
+              return s.setIn(["questions", index, "type"], type);
+            } else {
+              return s;
+            }
+          });
+        });
+      } else {
+        return model;
+      }
     case "SET_QUESTION_KEY":
       if (action.payload) {
         let { sectionId, questionId, key } = action.payload;
