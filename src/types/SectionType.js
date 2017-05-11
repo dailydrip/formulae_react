@@ -2,12 +2,11 @@
 
 import { Record, List } from "immutable";
 import QuestionType from "./QuestionType";
-const uuidV4 = require("uuid/v4");
 
 // FIXME: Flow isn't checking these record types sigh
 export default class SectionType
   extends Record({
-    id: uuidV4(),
+    id: "",
     name: "",
     content: "",
     order: 0,

@@ -4,6 +4,7 @@ import { Model, FormType, SectionType, QuestionType } from "../types";
 import { List } from "immutable";
 
 const init = new Model();
+const uuidV4 = require("uuid/v4");
 
 type Action = "ADD_SECTION" | "ADD_QUESTION";
 
@@ -16,6 +17,7 @@ export default function AdministerFormReducer(
       return model.updateIn(["form", "sections"], sections => {
         return sections.push(
           new SectionType({
+            id: uuidV4(),
             name: "",
             content: ""
           })
@@ -57,7 +59,26 @@ export default function AdministerFormReducer(
         return model.updateIn(["form", "sections"], sections => {
           return sections.map(s => {
             if (s.id == sectionId) {
-              return s.set("questions", s.questions.push(new QuestionType({})));
+              return s.set(
+                "questions",
+                s.questions.push(new QuestionType({ id: uuidV4() }))
+              );
+            } else {
+              return s;
+            }
+          });
+        });
+      } else {
+        return model;
+      }
+    case "SET_QUESTION_KEY":
+      if (action.payload) {
+        let { sectionId, questionId, key } = action.payload;
+        return model.updateIn(["form", "sections"], sections => {
+          return sections.map(s => {
+            if (s.id == sectionId) {
+              let index = s.questions.findIndex(q => q.id == questionId);
+              return s.set("questions", s.questions.setIn([index, "key"], key));
             } else {
               return s;
             }

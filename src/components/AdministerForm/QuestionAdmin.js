@@ -4,15 +4,29 @@ import React from "react";
 import { QuestionType } from "../../types";
 
 type Props = {
-  question: QuestionType
+  section: Object,
+  question: QuestionType,
+  setQuestionKey: Function,
+  setQuestionLabel: Function
 };
 
 export default function QuestionAdmin(props: Props) {
-  const { question } = props;
+  const { section, question, setQuestionKey, setQuestionLabel } = props;
   return (
-    <div>
-      <input type="text" value={question.key} name="name" />
-      <input type="text" value={question.label} name="label" />
+    <div className="question">
+      <input
+        type="text"
+        value={question.key}
+        name="key"
+        onChange={e => setQuestionKey(section.id, question.id, e.target.value)}
+      />
+      <input
+        type="text"
+        value={question.label}
+        name="label"
+        onChange={e =>
+          setQuestionLabel(section.id, question.id, e.target.value)}
+      />
     </div>
   );
 }

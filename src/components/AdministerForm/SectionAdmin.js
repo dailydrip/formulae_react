@@ -2,33 +2,60 @@
 
 import React from "react";
 import { SectionType } from "../../types";
+import QuestionAdmin from "./QuestionAdmin";
 
 type Props = {
   section: SectionType,
-  addQuestion: Function,
   setSectionName: Function,
-  setSectionContent: Function
+  setSectionContent: Function,
+  addQuestion: Function,
+  setQuestionKey: Function,
+  setQuestionLabel: Function
 };
 
 export default function SectionAdmin(props: Props) {
-  const { section, addQuestion, setSectionName, setSectionContent } = props;
+  const {
+    section,
+    addQuestion,
+    setSectionName,
+    setSectionContent,
+    setQuestionKey,
+    setQuestionLabel
+  } = props;
+  const questionsToRender = section.questions.map((q, i) => (
+    <QuestionAdmin
+      addQuestion={addQuestion}
+      setQuestionKey={setQuestionKey}
+      setQuestionLabel={setQuestionLabel}
+      question={q}
+      section={section}
+      key={i}
+    />
+  ));
+
   return (
     <div>
-      <button onClick={() => addQuestion(section.id)}>
-        Add Question
-      </button>
-      <input
-        type="text"
-        value={section.name}
-        name="name"
-        onChange={e => setSectionName(section.id, e.target.value)}
-      />
-      <input
-        type="text"
-        value={section.content}
-        name="content"
-        onChange={e => setSectionContent(section.id, e.target.value)}
-      />
+      <div className="section">
+        <h6>{section.name}</h6>
+        <input
+          type="text"
+          value={section.name}
+          name="name"
+          onChange={e => setSectionName(section.id, e.target.value)}
+        />
+        <input
+          type="text"
+          value={section.content}
+          name="content"
+          onChange={e => setSectionContent(section.id, e.target.value)}
+        />
+        <button onClick={() => addQuestion(section.id)}>
+          Add Question
+        </button>
+      </div>
+      <div className="question-container">
+        {questionsToRender}
+      </div>
     </div>
   );
 }

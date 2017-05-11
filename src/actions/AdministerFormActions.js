@@ -36,8 +36,36 @@ function addQuestion(sectionId: number) {
   };
 }
 
+function setQuestionKey(sectionId: number, questionId: number, key: string) {
+  return {
+    type: "SET_QUESTION_KEY",
+    payload: {
+      sectionId,
+      questionId,
+      key
+    }
+  };
+}
+
+function setQuestionLabel(
+  sectionId: number,
+  questionId: number,
+  label: string
+) {
+  return {
+    type: "SET_QUESTION_LABEL",
+    payload: {
+      sectionId,
+      questionId,
+      label
+    }
+  };
+}
+
 export default {
   addSection,
   setSectionName,
-  addQuestion
+  addQuestion,
+  setQuestionKey,
+  setQuestionLabel
 };
