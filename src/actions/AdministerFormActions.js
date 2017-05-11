@@ -65,6 +65,7 @@ function setQuestionLabel(
 export default {
   addSection,
   setSectionName,
+  setSectionContent,
   addQuestion,
   setQuestionKey,
   setQuestionLabel
