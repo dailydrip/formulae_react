@@ -73,6 +73,13 @@ function setQuestionLabel(
   };
 }
 
+function saveForm() {
+  return (dispatch, getState) => {
+    const { form } = getState();
+    Form.findOrCreate(form).then(console.log);
+  };
+}
+
 export default {
   addSection,
   setSectionName,
@@ -80,5 +87,6 @@ export default {
   addQuestion,
   setQuestionKey,
   setQuestionType,
-  setQuestionLabel
+  setQuestionLabel,
+  saveForm
 };

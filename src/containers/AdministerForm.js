@@ -26,6 +26,7 @@ export const AdministerForm = connect(
         dispatch(
           AdministerFormActions.setQuestionKey(sectionId, questionId, key)
         ),
+      saveForm: () => dispatch(AdministerFormActions.saveForm()),
       setQuestionLabel: (sectionId, questionId, label) =>
         dispatch(
           AdministerFormActions.setQuestionLabel(sectionId, questionId, label)

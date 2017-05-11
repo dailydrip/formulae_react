@@ -20,6 +20,7 @@ type Props = {
   setSectionContent: Function,
   setQuestionType: Function,
   setQuestionKey: Function,
+  saveForm: Function,
   setQuestionLabel: Function
 };
 
@@ -32,6 +33,7 @@ export default function AdministerForm(props: Props) {
     addQuestion,
     setQuestionType,
     setQuestionKey,
+    saveForm,
     setQuestionLabel
   } = props;
   const sectionsToRender = form.sections.map((s, i) => (
@@ -49,6 +51,7 @@ export default function AdministerForm(props: Props) {
   return (
     <div>
       <h2>Administer Form</h2>
+      <hr />
       <div>
         <h3>Sections</h3>
         {sectionsToRender}
@@ -57,6 +60,9 @@ export default function AdministerForm(props: Props) {
         </button>
       </div>
       <hr />
+      <button onClick={() => saveForm()}>
+        Save  Form
+      </button>
     </div>
   );
 }
