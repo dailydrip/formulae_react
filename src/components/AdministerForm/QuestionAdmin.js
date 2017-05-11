@@ -11,16 +11,38 @@ type Props = {
   setQuestionLabel: Function
 };
 
-export default function QuestionAdmin(props: Props) {
+function renderQuestionType(props) {
+  const {
+    section,
+    setQuestionType,
+    question
+  } = props;
+  if (question.type == "") {
+    return (
+      <select
+        onChange={e => setQuestionType(section.id, question.id, e.target.value)}
+      >
+        <option value="">Choose a type of Question</option>
+        <option value="string">String</option>
+        <option value="text">Text</option>
+        <option value="boolean">Boolean</option>
+      </select>
+    );
+  }
+  if (question.type == "string") {
+    return renderStringQuestion(props);
+  }
+}
+
+function renderStringQuestion(props) {
   const {
     section,
     question,
-    setQuestionType,
     setQuestionKey,
     setQuestionLabel
   } = props;
   return (
-    <div className="question">
+    <div>
       <input
         type="text"
         value={question.key}
@@ -34,6 +56,14 @@ export default function QuestionAdmin(props: Props) {
         onChange={e =>
           setQuestionLabel(section.id, question.id, e.target.value)}
       />
+    </div>
+  );
+}
+
+export default function QuestionAdmin(props: Props) {
+  return (
+    <div className="question">
+      {renderQuestionType(props)}
     </div>
   );
 }

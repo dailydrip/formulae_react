@@ -18,13 +18,10 @@ type Props = {
   addQuestion: Function,
   setSectionName: Function,
   setSectionContent: Function,
+  setQuestionType: Function,
   setQuestionKey: Function,
   setQuestionLabel: Function
 };
-
-function createSection(addSection) {
-  addSection();
-}
 
 export default function AdministerForm(props: Props) {
   const {
