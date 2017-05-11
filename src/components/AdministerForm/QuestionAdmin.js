@@ -28,13 +28,12 @@ function renderQuestionType(props) {
         <option value="boolean">Boolean</option>
       </select>
     );
-  }
-  if (question.type == "string") {
-    return renderStringQuestion(props);
+  } else {
+    return renderQuestionFields(props);
   }
 }
 
-function renderStringQuestion(props) {
+function renderQuestionFields(props) {
   const {
     section,
     question,
@@ -43,6 +42,7 @@ function renderStringQuestion(props) {
   } = props;
   return (
     <div>
+      {question.type}:
       <input
         type="text"
         value={question.key}
