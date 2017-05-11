@@ -78,7 +78,7 @@ export default function AdministerFormReducer(
           return sections.map(s => {
             if (s.id == sectionId) {
               let index = s.questions.findIndex(q => q.id == questionId);
-              return s.set("questions", s.questions.setIn([index, "key"], key));
+              return s.setIn(["questions", index, "key"], key);
             } else {
               return s;
             }
@@ -94,10 +94,7 @@ export default function AdministerFormReducer(
           return sections.map(s => {
             if (s.id == sectionId) {
               let index = s.questions.findIndex(q => q.id == questionId);
-              return s.set(
-                "questions",
-                s.questions.setIn([index, "label"], label)
-              );
+              return s.setIn(["questions", index, "label"], label);
             } else {
               return s;
             }
