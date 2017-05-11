@@ -24,7 +24,7 @@ export const AdministerForm = connect(
         ),
       setQuestionLabel: (sectionId, questionId, label) =>
         dispatch(
-          AdministerFormActions.setSectionLabel(sectionId, questionId, label)
+          AdministerFormActions.setQuestionLabel(sectionId, questionId, label)
         )
     };
   }

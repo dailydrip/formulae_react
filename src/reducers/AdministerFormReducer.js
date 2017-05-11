@@ -87,6 +87,25 @@ export default function AdministerFormReducer(
       } else {
         return model;
       }
+    case "SET_QUESTION_LABEL":
+      if (action.payload) {
+        let { sectionId, questionId, label } = action.payload;
+        return model.updateIn(["form", "sections"], sections => {
+          return sections.map(s => {
+            if (s.id == sectionId) {
+              let index = s.questions.findIndex(q => q.id == questionId);
+              return s.set(
+                "questions",
+                s.questions.setIn([index, "label"], label)
+              );
+            } else {
+              return s;
+            }
+          });
+        });
+      } else {
+        return model;
+      }
     default:
       return model;
   }
