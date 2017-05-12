@@ -44,6 +44,8 @@ const exampleForm = new FormType({
 // END EXAMPLE FORM DATA
 
 type Action = "LOAD_EXAMPLE_FORM" | "GET_API_FORM" | "GOT_API_FORM";
+// FIXME: Uncomment this and then think real hard
+//| "SET_QUESTION_SUBMISSION";
 
 export default function RespondToFormReducer(
   model: Model = init,
