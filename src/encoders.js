@@ -36,7 +36,6 @@ type ApiSection = {
 
 type ApiForm = {
   application_id: ?number,
-  questions: Array<ApiQuestion>,
   sections: Array<ApiSection>
 };
 
@@ -77,6 +76,7 @@ function encodeSection(section: QuestionType): ApiSection {
     form_id: undefined,
     name: section.name,
     order: section.order,
+    questions: section.questions.map(encodeQuestion).toArray(),
     content: section.content
   };
 }
@@ -84,7 +84,6 @@ function encodeSection(section: QuestionType): ApiSection {
 function encodeForm(form: FormType): ApiForm {
   return {
     application_id: 1,
-    questions: form.sections.flatMap(s => s.questions).toArray(),
     sections: form.sections.toArray().map(encodeSection)
   };
 }
