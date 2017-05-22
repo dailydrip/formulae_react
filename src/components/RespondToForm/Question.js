@@ -51,7 +51,7 @@ function shouldDisplayQuestion(props: Props) {
         return submissions.find((submission, key) => {
           // FIXME: We need to know it's THIS choice this is answering,
           // eventually
-          return submission.value == choice.id;
+          return submission.value === choice.id;
         });
       });
     if (dependentChoicesSelected.size > 0) {
