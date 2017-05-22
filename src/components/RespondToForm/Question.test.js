@@ -23,6 +23,7 @@ it("renders without crashing", () => {
     <Question
       question={question}
       submission={new QuestionSubmissionType()}
+      submissions={new Map()}
       setSubmission={() => {}}
     />,
     div
@@ -35,6 +36,7 @@ it("renders the label", () => {
     <Question
       question={question}
       submission={new QuestionSubmissionType()}
+      submissions={new Map()}
       setSubmission={() => {}}
     />
   );
@@ -49,6 +51,7 @@ describe("Required Questions", () => {
       <Question
         question={requiredQuestion}
         submission={new QuestionSubmissionType()}
+        submissions={new Map()}
         setSubmission={() => {}}
       />
     );
@@ -63,11 +66,12 @@ describe("Required Questions", () => {
       <Question
         question={question}
         submission={new QuestionSubmissionType()}
+        submissions={new Map()}
         setSubmission={() => {}}
       />
     );
 
     expect(subject.find("label").text()).toMatch(/first/);
-    expect(subject.find("small").text()).not.toMatch(/required/);
+    expect(subject.find("small").length).toEqual(0);
   });
 });

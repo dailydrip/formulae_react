@@ -7,6 +7,7 @@ import { List } from "immutable";
 
 type Props = {
   question: QuestionType,
+  submissions: Map<String, QuestionSubmissionType>,
   submission: QuestionSubmissionType,
   setSubmission: Function
 };
@@ -28,7 +29,6 @@ export default function Question(props: Props) {
   } else {
     required = "";
   }
-  <small>{required}</small>;
 
   return (
     <div>
