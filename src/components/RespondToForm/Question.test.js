@@ -1,7 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Question from "./Question";
-import { QuestionType, QuestionSubmissionType } from "../../types";
+import {
+  QuestionType,
+  QuestionSubmissionType,
+  QuestionDependencyType,
+  ChoiceType
+} from "../../types";
+import { List, Map } from "immutable";
 import { shallow } from "enzyme";
 
 const question = new QuestionType({
@@ -31,7 +37,6 @@ it("renders without crashing", () => {
 });
 
 it("renders the label", () => {
-  const div = document.createElement("div");
   const subject = shallow(
     <Question
       question={question}
@@ -46,7 +51,6 @@ it("renders the label", () => {
 
 describe("Required Questions", () => {
   it("renders the required text when the question is required", () => {
-    const div = document.createElement("div");
     const subject = shallow(
       <Question
         question={requiredQuestion}
@@ -61,7 +65,6 @@ describe("Required Questions", () => {
   });
 
   it("does not render required when the question is not required", () => {
-    const div = document.createElement("div");
     const subject = shallow(
       <Question
         question={question}
@@ -73,5 +76,80 @@ describe("Required Questions", () => {
 
     expect(subject.find("label").text()).toMatch(/first/);
     expect(subject.find("small").length).toEqual(0);
+  });
+});
+
+describe("QuestionDependency", () => {
+  const choice1 = new ChoiceType({
+    id: "10",
+    name: "first"
+  });
+
+  describe("display: true", () => {
+    const questionDependencyDisplayTrue = new QuestionDependencyType({
+      id: "1",
+      display: true,
+      choices: List([choice1]),
+      and: false
+    });
+
+    const questionWithDependencyDisplayTrue = new QuestionType({
+      key: "first",
+      label: "firstWithDependency",
+      type: "string",
+      required: false,
+      questionDependency: questionDependencyDisplayTrue
+    });
+
+    const submissions = new Map({
+      someQuestionId: "10"
+    });
+
+    it("renders the question if its dependencies are satisfied", () => {
+      const subject = shallow(
+        <Question
+          question={questionWithDependencyDisplayTrue}
+          submission={new QuestionSubmissionType()}
+          submissions={submissions}
+          setSubmission={() => {}}
+        />
+      );
+
+      expect(subject.find("label").text()).toMatch(/firstWithDependency/);
+    });
+  });
+
+  describe("display: false", () => {
+    const questionDependencyDisplayTrue = new QuestionDependencyType({
+      id: "1",
+      display: false,
+      choices: List([choice1]),
+      and: false
+    });
+
+    const questionWithDependencyDisplayTrue = new QuestionType({
+      key: "first",
+      label: "firstWithDependency",
+      type: "string",
+      required: false,
+      questionDependency: questionDependencyDisplayTrue
+    });
+
+    const submissions = new Map({
+      someQuestionId: "10"
+    });
+
+    it("hides the question if its dependencies are satisfied", () => {
+      const subject = shallow(
+        <Question
+          question={questionWithDependencyDisplayTrue}
+          submission={new QuestionSubmissionType()}
+          submissions={submissions}
+          setSubmission={() => {}}
+        />
+      );
+
+      expect(subject.find("label").length).toEqual(0);
+    });
   });
 });

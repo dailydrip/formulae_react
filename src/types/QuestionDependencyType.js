@@ -7,7 +7,7 @@ export default class QuestionDependencyType
   extends Record({
     id: "",
     display: true,
-    choices: [],
+    choices: List([]),
     and: false
   }) {
   id: string;

@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function Radio(props: Props) {
-  const { id, name, value, content, choices, onChange } = props;
+  const { name, value, content, choices, onChange } = props;
 
   const options = choices
     .map((choice, i) => {
@@ -26,7 +26,7 @@ export default function Radio(props: Props) {
             id={choiceId}
             value={choice.get("id")}
             checked={value === choice.get("id")}
-            onChange={() => onChange(id)}
+            onChange={() => onChange(choiceId)}
           />
           {choice.get("name")}
         </label>
