@@ -5,6 +5,7 @@ import {
   FormResponseType,
   SectionType,
   QuestionType,
+  QuestionDependencyType,
   FormSubmissionResponseType
 } from "./types";
 import { List } from "immutable";
@@ -36,8 +37,16 @@ type ApiQuestion = {
   question_type: string,
   validate_as: string | null,
   created_at: string,
+  question_dependency: ApiQuestionDependency,
   updated_at: string,
   section_id: number
+};
+
+type ApiQuestionDependency = {
+  id: string,
+  display: boolean,
+  choices: string,
+  and: boolean
 };
 
 type ApiForm = {
@@ -74,6 +83,9 @@ function decodeSection(
 }
 
 function decodeQuestion(question: ApiQuestion): QuestionType {
+  const questionDependency = decodeQuestionDependency(
+    question.question_dependency
+  );
   return new QuestionType({
     id: question.id,
     key: question.key,
@@ -82,7 +94,22 @@ function decodeQuestion(question: ApiQuestion): QuestionType {
     type: question.question_type,
     order: question.order,
     required: question.required,
-    section_id: question.section_id
+    section_id: question.section_id,
+    questionDependency: questionDependency
+  });
+}
+
+function decodeQuestionDependency(
+  questionDependency: ApiQuestionDependency
+): QuestionDependencyType {
+  debugger;
+  if (questionDependency === null) {
+    return new QuestionDependencyType();
+  }
+  return new QuestionDependencyType({
+    display: questionDependency.display,
+    choices: [],
+    and: questionDependency.and
   });
 }
 
