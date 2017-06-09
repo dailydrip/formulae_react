@@ -14,6 +14,8 @@ export default function AdministerFormReducer(
   switch (action.type) {
     case "MOVE_QUESTION":
       return moveQuestion(model, action.payload);
+    case "MOVE_SECTION":
+      return moveSection(model, action.payload);
     case "TOGGLE_EXPAND_QUESTION":
       return toggleExpandQuestion(model, action.payload);
     case "ADD_SECTION":
@@ -45,6 +47,19 @@ export default function AdministerFormReducer(
     default:
       return model;
   }
+}
+
+function moveSection(model, payload) {
+  let { sectionId, direction } = payload;
+  let sections = model.getIn(["form", "sections"]);
+  const nextSections = sections.map(value => {
+    if (value.id === sectionId) {
+      return value.set("order", value.get("order") + direction);
+    } else {
+      return value;
+    }
+  });
+  return model.setIn(["form", "sections"], nextSections);
 }
 
 function moveQuestion(model, payload) {
