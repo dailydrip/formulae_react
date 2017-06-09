@@ -1,21 +1,38 @@
 // @flow
 import React from "react";
+import { FormSubmissionType } from "../types";
 
 type Props = {
-  apiKey: number,
-  formSubmissionId: number
+  formSubmission: ?FormSubmissionType,
+  formSubmissionId: string,
+  getFormSubmission: Function
 };
 
 export default function ViewFormSubmission(props: Props) {
   const {
-    apiKey,
-    formSubmissionId
+    formSubmissionId,
+    formSubmission,
+    getFormSubmission
   } = props;
+
+  if (formSubmission !== null) {
+    const questionSubmissions = formSubmission.questionSubmissions.map(
+      (qs, i) => <li key={i}>qs.value</li>
+    );
+  }
 
   return (
     <div>
-      {apiKey}
-      {formSubmissionId}
+      <ul>
+        {questionSubmissions}
+      </ul>
+      <button
+        onClick={() => {
+          getFormSubmission(1);
+        }}
+      >
+        Get API FormSubmission 1
+      </button>
     </div>
   );
 }

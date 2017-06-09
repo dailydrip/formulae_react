@@ -29,9 +29,9 @@ ReactDOM.render(
 );
 
 // Example for ViewFormSubmission
-// ReactDOM.render(
-//  <Provider store={ViewFormSubmissionStore}>
-//    <ViewFormSubmission apiKey={1} formSubmissionId={1} />
-//  </Provider>,
-//  document.getElementById("view-form-submission")
-//  );
+ReactDOM.render(
+  <Provider store={ViewFormSubmissionStore}>
+    <ViewFormSubmission formSubmissionId={1} />
+  </Provider>,
+  document.getElementById("view-form-submission")
+);
