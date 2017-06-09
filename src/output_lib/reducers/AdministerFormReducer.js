@@ -54,7 +54,13 @@ function moveSection(model, payload) {
   let sections = model.getIn(["form", "sections"]);
   const nextSections = sections.map(value => {
     if (value.id === sectionId) {
-      return value.set("order", value.get("order") + direction);
+      const maxValue = sections.count();
+      const newOrder = value.get("order") + direction;
+      if (0 <= newOrder && newOrder <= maxValue) {
+        return value.set("order", newOrder);
+      } else {
+        return value;
+      }
     } else {
       return value;
     }
@@ -68,7 +74,13 @@ function moveQuestion(model, payload) {
   let questions = model.getIn(["form", "sections", sectionIndex, "questions"]);
   const nextQuestions = questions.map(value => {
     if (value.id === questionId) {
-      return value.set("order", value.get("order") + direction);
+      const maxValue = questions.count();
+      const newOrder = value.get("order") + direction;
+      if (0 <= newOrder && newOrder <= maxValue) {
+        return value.set("order", newOrder);
+      } else {
+        return value;
+      }
     } else {
       return value;
     }
@@ -99,10 +111,12 @@ function toggleExpandQuestion(model, payload) {
 
 function addSection(model) {
   return model.updateIn(["form", "sections"], sections => {
+    const maxOrder = sections.map(q => q.order).max() || 0;
     return sections.push(
       new SectionType({
         id: uuidV4(),
         name: "",
+        order: maxOrder + 1,
         content: ""
       })
     );
