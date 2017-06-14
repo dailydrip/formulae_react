@@ -51,13 +51,28 @@ export default function AdministerFormReducer(
 
 function moveSection(model, payload) {
   const { sectionId, direction } = payload;
-  const sections = model.getIn(["form", "sections"]);
-  const maxOrder = sections.map(s => s.order).sort().max();
-  const section = sections.find(s => s.id === sectionId);
+  return moveThing(model, ["sections"], sectionId, direction);
+}
+
+function moveQuestion(model, payload) {
+  const { questionId, sectionId, direction } = payload;
+  const sectionIndex = model.form.sections.findIndex(q => q.id === sectionId);
+  return moveThing(
+    model,
+    ["sections", sectionIndex, "questions"],
+    questionId,
+    direction
+  );
+}
+
+function moveThing(model, key, thingId, direction) {
+  const things = model.getIn(["form"].concat(key));
+  const maxOrder = things.map(s => s.order).sort().max();
+  const section = things.find(s => s.id === thingId);
   if (section) {
     const nextOrder = section.order + direction;
-    const nextSections = sections.map((value, index) => {
-      if (value.id === sectionId) {
+    const nextThings = things.map((value, index) => {
+      if (value.id === thingId) {
         if (1 <= nextOrder && nextOrder <= maxOrder) {
           return value.set("order", nextOrder);
         } else {
@@ -79,39 +94,11 @@ function moveSection(model, payload) {
         }
       }
     });
-    return model.setIn(["form", "sections"], nextSections);
+    return model.setIn(["form"].concat(key), nextThings);
   } else {
-    console.log("no section with section id", sectionId);
+    console.log("no thing", key, thingId);
     return model;
   }
-}
-
-function moveQuestion(model, payload) {
-  const { questionId, sectionId, direction } = payload;
-  const sectionIndex = model.form.sections.findIndex(q => q.id === sectionId);
-  const questions = model.getIn([
-    "form",
-    "sections",
-    sectionIndex,
-    "questions"
-  ]);
-  const nextQuestions = questions.map(value => {
-    if (value.id === questionId) {
-      const maxValue = questions.count();
-      const newOrder = value.get("order") + direction;
-      if (0 <= newOrder && newOrder <= maxValue) {
-        return value.set("order", newOrder);
-      } else {
-        return value;
-      }
-    } else {
-      return value;
-    }
-  });
-  return model.setIn(
-    ["form", "sections", sectionIndex, "questions"],
-    nextQuestions
-  );
 }
 
 function setFormCompletionContent(model, payload) {
