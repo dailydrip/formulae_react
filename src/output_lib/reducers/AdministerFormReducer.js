@@ -54,12 +54,12 @@ function moveSection(model, payload) {
   let sections = model.getIn(["form", "sections"]);
   let currentIndex = 0;
   let newOrder = 0;
+  const maxValue = sections.count();
   let nextSections = sections.map((value, index) => {
     if (value.id === sectionId) {
       currentIndex = index;
-      const maxValue = sections.count();
       newOrder = value.get("order") + direction;
-      if (0 <= newOrder && newOrder <= maxValue) {
+      if (1 <= newOrder && newOrder <= maxValue) {
         return value.set("order", newOrder);
       } else {
         return value;
@@ -68,12 +68,18 @@ function moveSection(model, payload) {
       return value;
     }
   });
+  // Updating the previous or next section
+  let previousIndex = currentIndex - 1;
   if (direction > 0) {
-    let nextIndex = currentIndex + 1;
-    nextSections = nextSections.setIn([nextIndex, "order"], newOrder - 1);
+    nextSections = nextSections.setIn(
+      [currentIndex + 1, "order"],
+      newOrder - 1
+    );
   } else {
-    let previousIndex = currentIndex - 1;
-    nextSections = nextSections.setIn([previousIndex, "order"], newOrder + 1);
+    let nextIndex = currentIndex + 1 >= maxValue
+      ? currentIndex
+      : currentIndex + 1;
+    nextSections = nextSections.setIn([nextIndex, "order"], newOrder + 1);
   }
   return model.setIn(["form", "sections"], nextSections);
 }
