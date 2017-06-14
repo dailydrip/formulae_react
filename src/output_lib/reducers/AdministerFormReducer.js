@@ -52,10 +52,13 @@ export default function AdministerFormReducer(
 function moveSection(model, payload) {
   let { sectionId, direction } = payload;
   let sections = model.getIn(["form", "sections"]);
-  const nextSections = sections.map(value => {
+  let currentIndex = 0;
+  let newOrder = 0;
+  let nextSections = sections.map((value, index) => {
     if (value.id === sectionId) {
+      currentIndex = index;
       const maxValue = sections.count();
-      const newOrder = value.get("order") + direction;
+      newOrder = value.get("order") + direction;
       if (0 <= newOrder && newOrder <= maxValue) {
         return value.set("order", newOrder);
       } else {
@@ -65,6 +68,13 @@ function moveSection(model, payload) {
       return value;
     }
   });
+  if (direction > 0) {
+    let nextIndex = currentIndex + 1;
+    nextSections = nextSections.setIn([nextIndex, "order"], newOrder - 1);
+  } else {
+    let previousIndex = currentIndex - 1;
+    nextSections = nextSections.setIn([previousIndex, "order"], newOrder + 1);
+  }
   return model.setIn(["form", "sections"], nextSections);
 }
 
