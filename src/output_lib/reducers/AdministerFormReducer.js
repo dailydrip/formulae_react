@@ -50,44 +50,51 @@ export default function AdministerFormReducer(
 }
 
 function moveSection(model, payload) {
-  let { sectionId, direction } = payload;
-  let sections = model.getIn(["form", "sections"]);
-  let currentIndex = 0;
-  let newOrder = 0;
-  const maxValue = sections.count();
-  let nextSections = sections.map((value, index) => {
-    if (value.id === sectionId) {
-      currentIndex = index;
-      newOrder = value.get("order") + direction;
-      if (1 <= newOrder && newOrder <= maxValue) {
-        return value.set("order", newOrder);
+  const { sectionId, direction } = payload;
+  const sections = model.getIn(["form", "sections"]);
+  const maxOrder = sections.map(s => s.order).sort().max();
+  const section = sections.find(s => s.id === sectionId);
+  if (section) {
+    const nextOrder = section.order + direction;
+    const nextSections = sections.map((value, index) => {
+      if (value.id === sectionId) {
+        if (1 <= nextOrder && nextOrder <= maxOrder) {
+          return value.set("order", nextOrder);
+        } else {
+          return value;
+        }
       } else {
-        return value;
+        if (direction === -1) {
+          if (value.order <= nextOrder) {
+            return value.set("order", value.order + 1);
+          } else {
+            return value;
+          }
+        } else {
+          if (value.order >= nextOrder) {
+            return value.set("order", value.order - 1);
+          } else {
+            return value;
+          }
+        }
       }
-    } else {
-      return value;
-    }
-  });
-  // Updating the previous or next section
-  let previousIndex = currentIndex - 1;
-  if (direction > 0) {
-    nextSections = nextSections.setIn(
-      [currentIndex + 1, "order"],
-      newOrder - 1
-    );
+    });
+    return model.setIn(["form", "sections"], nextSections);
   } else {
-    let nextIndex = currentIndex + 1 >= maxValue
-      ? currentIndex
-      : currentIndex + 1;
-    nextSections = nextSections.setIn([nextIndex, "order"], newOrder + 1);
+    console.log("no section with section id", sectionId);
+    return model;
   }
-  return model.setIn(["form", "sections"], nextSections);
 }
 
 function moveQuestion(model, payload) {
-  let { questionId, sectionId, direction } = payload;
-  let sectionIndex = model.form.sections.findIndex(q => q.id === sectionId);
-  let questions = model.getIn(["form", "sections", sectionIndex, "questions"]);
+  const { questionId, sectionId, direction } = payload;
+  const sectionIndex = model.form.sections.findIndex(q => q.id === sectionId);
+  const questions = model.getIn([
+    "form",
+    "sections",
+    sectionIndex,
+    "questions"
+  ]);
   const nextQuestions = questions.map(value => {
     if (value.id === questionId) {
       const maxValue = questions.count();
