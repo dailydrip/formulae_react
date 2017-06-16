@@ -53,6 +53,8 @@ export default function AdministerFormReducer(
       return addChoice(model, action.payload);
     case "SET_CHOICE_LABEL":
       return setChoiceLabel(model, action.payload);
+    case "MOVE_CHOICE":
+      return moveChoice(model, action.payload);
     default:
       return model;
   }
@@ -115,6 +117,20 @@ function setChoiceLabel(model, payload) {
   } else {
     return model;
   }
+}
+
+function moveChoice(model, payload) {
+  const { questionId, sectionId, choiceId, direction } = payload;
+  const sectionIndex = model.form.sections.findIndex(s => s.id === sectionId);
+  const questionIndex = model.form.sections
+    .get(sectionIndex)
+    .questions.findIndex(q => q.id === questionId);
+  return moveThing(
+    model,
+    ["sections", sectionIndex, "questions", questionIndex, "choices"],
+    choiceId,
+    direction
+  );
 }
 
 function moveSection(model, payload) {

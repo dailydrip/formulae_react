@@ -81,9 +81,14 @@ export const AdministerForm = connect(
         ),
       addChoice: (sectionId, questionId) =>
         dispatch(AdministerFormActions.addChoice(sectionId, questionId)),
-      moveChoice: (sectionId, questionId, direction) =>
+      moveChoice: (sectionId, questionId, choiceId, direction) =>
         dispatch(
-          AdministerFormActions.moveChoice(sectionId, questionId, direction)
+          AdministerFormActions.moveChoice(
+            sectionId,
+            questionId,
+            choiceId,
+            direction
+          )
         ),
       setChoiceLabel: (sectionId, questionId, choiceId, label) =>
         dispatch(

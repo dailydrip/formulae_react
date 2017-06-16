@@ -1,9 +1,7 @@
 // @flow
 
 import React from "react";
-import { SectionType, ChoiceType } from "../../types";
-import QuestionAdmin from "./QuestionAdmin";
-import { Set } from "immutable";
+import { ChoiceType } from "../../types";
 
 type Props = {
   choice: ChoiceType,
@@ -19,8 +17,8 @@ export default function ChoiceAdmin(props: Props) {
   return (
     <div>
       <div className="section">
-        <button onClick={() => moveChoice(-1)}>Up</button>
-        <button onClick={() => moveChoice(1)}>Down</button>
+        <button onClick={() => moveChoice(choice.id, -1)}>Up</button>
+        <button onClick={() => moveChoice(choice.id, 1)}>Down</button>
         <label>
           Option Name:
           <input

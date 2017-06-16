@@ -2,8 +2,6 @@
 
 import React from "react";
 import { QuestionType } from "../../types";
-import QuestionAdmin from "./QuestionAdmin";
-import { Set } from "immutable";
 import ChoiceAdmin from "./ChoiceAdmin";
 
 type Props = {
@@ -32,7 +30,8 @@ export default function ChoicesAdmin(props: Props) {
         choice={c}
         sectionId={sectionId}
         questionId={question.id}
-        moveChoice={direction => moveChoice(sectionId, question.id, direction)}
+        moveChoice={(choiceId, direction) =>
+          moveChoice(sectionId, question.id, choiceId, direction)}
       />
     ));
 

@@ -202,12 +202,18 @@ function addChoice(sectionId: string, questionId: string) {
   };
 }
 
-function moveChoice(sectionId: string, questionId: string, direction: 1 | -1) {
+function moveChoice(
+  sectionId: string,
+  questionId: string,
+  choiceId: string,
+  direction: 1 | -1
+) {
   return {
     type: "MOVE_CHOICE",
     payload: {
       sectionId,
       questionId,
+      choiceId,
       direction
     }
   };
