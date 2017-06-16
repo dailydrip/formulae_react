@@ -14,7 +14,7 @@ type Props = {
   setChoiceLabel: Function
 };
 
-export default function ChoicesAdminister(props: Props) {
+export default function ChoicesAdmin(props: Props) {
   const {
     sectionId,
     question,

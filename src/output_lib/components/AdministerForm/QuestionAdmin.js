@@ -2,7 +2,7 @@
 
 import React from "react";
 import { SectionType, QuestionType } from "../../types";
-import ChoicesAdminister from "./ChoicesAdminister";
+import ChoicesAdmin from "./ChoicesAdmin";
 
 type Props = {
   section: Object,
@@ -236,7 +236,7 @@ function renderQuestionAdminType(
     return (
       <div>
         {descriptionTextArea}
-        <ChoicesAdminister
+        <ChoicesAdmin
           sectionId={section.id}
           question={question}
           addChoice={addChoice}
