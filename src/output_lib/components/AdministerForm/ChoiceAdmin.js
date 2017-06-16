@@ -28,7 +28,7 @@ export default function ChoiceAdmin(props: Props) {
             value={choice.label}
             name="name"
             onChange={e =>
-              setChoiceLabel(sectionId, questionId, e.target.value)}
+              setChoiceLabel(sectionId, questionId, choice.id, e.target.value)}
           />
         </label>
       </div>

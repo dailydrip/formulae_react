@@ -213,12 +213,18 @@ function moveChoice(sectionId: string, questionId: string, direction: 1 | -1) {
   };
 }
 
-function setChoiceLabel(sectionId: string, questionId: string, label: string) {
+function setChoiceLabel(
+  sectionId: string,
+  questionId: string,
+  choiceId: string,
+  label: string
+) {
   return {
     type: "SET_CHOICE_LABEL",
     payload: {
       sectionId,
       questionId,
+      choiceId,
       label
     }
   };

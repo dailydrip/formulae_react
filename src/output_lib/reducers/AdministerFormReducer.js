@@ -51,6 +51,8 @@ export default function AdministerFormReducer(
       return setQuestionPlaceholder(model, action.payload);
     case "ADD_CHOICE":
       return addChoice(model, action.payload);
+    case "SET_CHOICE_LABEL":
+      return setChoiceLabel(model, action.payload);
     default:
       return model;
   }
@@ -72,6 +74,34 @@ function addChoice(model, payload) {
                     new ChoiceType({ id: uuidV4(), order: maxOrder + 1 })
                   )
                 );
+              } else {
+                return q;
+              }
+            });
+          });
+        } else {
+          return s;
+        }
+      });
+    });
+  } else {
+    return model;
+  }
+}
+
+function setChoiceLabel(model, payload) {
+  if (payload) {
+    const { sectionId, questionId, choiceId, label } = payload;
+    return model.updateIn(["form", "sections"], sections => {
+      return sections.map(s => {
+        if (s.id === sectionId) {
+          return s.updateIn(["questions"], questions => {
+            return questions.map(q => {
+              if (q.id === questionId) {
+                const choiceIndex = q.choices.findIndex(c => c.id === choiceId);
+                var newChoices = q.choices.updateIn([choiceIndex], c =>
+                  c.set("label", label));
+                return q.set("choices", newChoices);
               } else {
                 return q;
               }
