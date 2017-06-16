@@ -94,26 +94,14 @@ function addChoice(model, payload) {
 function setChoiceLabel(model, payload) {
   if (payload) {
     const { sectionId, questionId, choiceId, label } = payload;
-    return model.updateIn(["form", "sections"], sections => {
-      return sections.map(s => {
-        if (s.id === sectionId) {
-          return s.updateIn(["questions"], questions => {
-            return questions.map(q => {
-              if (q.id === questionId) {
-                const choiceIndex = q.choices.findIndex(c => c.id === choiceId);
-                var newChoices = q.choices.updateIn([choiceIndex], c =>
-                  c.set("label", label));
-                return q.set("choices", newChoices);
-              } else {
-                return q;
-              }
-            });
-          });
-        } else {
-          return s;
-        }
-      });
-    });
+    return setChoiceField(
+      model,
+      sectionId,
+      questionId,
+      choiceId,
+      "label",
+      label
+    );
   } else {
     return model;
   }
@@ -224,6 +212,31 @@ function setSectionName(model, payload) {
   } else {
     return model;
   }
+}
+
+function setChoiceField(model, sectionId, questionId, choiceId, key, value) {
+  return model.updateIn(["form", "sections"], sections => {
+    return sections.map(s => {
+      if (s.id === sectionId) {
+        const sectionIndex = model.form.sections.findIndex(
+          s => s.id === sectionId
+        );
+        const questionIndex = model.form.sections
+          .get(sectionIndex)
+          .questions.findIndex(q => q.id === questionId);
+        const choiceIndex = model.form.sections
+          .get(sectionIndex)
+          .questions.get(questionIndex)
+          .choices.findIndex(c => c.id === choiceId);
+        return s.setIn(
+          ["questions", questionIndex, "choices", choiceIndex, key],
+          value
+        );
+      } else {
+        return s;
+      }
+    });
+  });
 }
 
 function setSectionContent(model, payload) {
