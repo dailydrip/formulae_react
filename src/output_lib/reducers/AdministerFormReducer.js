@@ -1,6 +1,11 @@
 // @flow
 
-import { AdministerFormModel, SectionType, QuestionType } from "../types";
+import {
+  AdministerFormModel,
+  SectionType,
+  QuestionType,
+  ChoiceType
+} from "../types";
 
 const init = new AdministerFormModel();
 const uuidV4 = require("uuid/v4");
@@ -44,8 +49,41 @@ export default function AdministerFormReducer(
       return deleteQuestion(model, action.payload);
     case "SET_QUESTION_PLACEHOLDER":
       return setQuestionPlaceholder(model, action.payload);
+    case "ADD_CHOICE":
+      return addChoice(model, action.payload);
     default:
       return model;
+  }
+}
+
+function addChoice(model, payload) {
+  if (payload) {
+    const { sectionId, questionId } = payload;
+    return model.updateIn(["form", "sections"], sections => {
+      return sections.map(s => {
+        if (s.id === sectionId) {
+          return s.updateIn(["questions"], questions => {
+            return questions.map(q => {
+              const maxOrder = q.choices.map(c => c.order).max() || 0;
+              if (q.id === questionId) {
+                return q.set(
+                  "choices",
+                  q.choices.push(
+                    new ChoiceType({ id: uuidV4(), order: maxOrder + 1 })
+                  )
+                );
+              } else {
+                return q;
+              }
+            });
+          });
+        } else {
+          return s;
+        }
+      });
+    });
+  } else {
+    return model;
   }
 }
 

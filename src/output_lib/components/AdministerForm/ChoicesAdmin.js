@@ -46,8 +46,8 @@ export default function ChoicesAdmin(props: Props) {
         >
           Add Choice
         </button>
-        <hr />
         {choicesToRender}
+        <hr />
       </div>
     </div>
   );
