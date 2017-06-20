@@ -128,6 +128,11 @@ export default class RespondToForm extends React.Component {
       submitted
     } = this.props;
 
+    // When we don't have this form in the backend
+    if (form.id === 0) {
+      return <h2>There is no form for this id</h2>;
+    }
+
     const sections = form.get("sections");
 
     // displaySectionsAs:
