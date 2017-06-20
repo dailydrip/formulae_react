@@ -12,6 +12,25 @@ import type {
   QuestionSubmissionsMapType
 } from "../types/QuestionSubmissionsMapType";
 
+type Props = {
+  form: FormType,
+  formId: number,
+  getForm: Function,
+  loadExampleForm: Function,
+  submissions: QuestionSubmissionsMapType,
+  setSubmission: Function,
+  setCurrentStep: Function,
+  currentStep: number,
+  submitForm: Function,
+  displaySectionsAs: string,
+  nextStep: Function,
+  prevStep: Function,
+  addError: Function,
+  removeError: Function,
+  errors: Object,
+  submitted: boolean
+};
+
 function generateFormSubmission(
   form: FormType,
   submissions: QuestionSubmissionsMapType
@@ -87,112 +106,99 @@ function submitFormWithValidation(
   }
 }
 
-export default class RespondToForm extends React.Component {
-  props: {
-    form: FormType,
-    formId: number,
-    getForm: Function,
-    submissions: QuestionSubmissionsMapType,
-    setSubmission: Function,
-    setCurrentStep: Function,
-    currentStep: number,
-    submitForm: Function,
-    displaySectionsAs: string,
-    nextStep: Function,
-    prevStep: Function,
-    addError: Function,
-    removeError: Function,
-    errors: Object,
-    submitted: boolean
-  };
+export default function RespondToForm(props: Props) {
+  const {
+    form,
+    getForm,
+    submissions,
+    setSubmission,
+    submitForm,
+    displaySectionsAs,
+    setCurrentStep,
+    currentStep,
+    nextStep,
+    prevStep,
+    addError,
+    removeError,
+    errors,
+    submitted
+  } = props;
 
-  componentWillMount() {
-    const { getForm, formId } = this.props;
-    getForm(formId);
-  }
-
-  render() {
-    const {
-      form,
-      submissions,
-      setSubmission,
-      submitForm,
-      displaySectionsAs,
-      setCurrentStep,
-      currentStep,
-      nextStep,
-      prevStep,
-      addError,
-      removeError,
-      errors,
-      submitted
-    } = this.props;
-
-    // When we don't have this form in the backend
-    if (form.id === 0) {
-      return <h2>There is no form for this id</h2>;
-    }
-
-    const sections = form.get("sections");
-
-    // displaySectionsAs:
-    // This determines how we show sections.
-    // - RespondToForm.Section.STEPS
-    //   - If this is chosen, we will show a single section at a time, and
-    //     'next/prev' buttons to move between sections
-    // - RespondToForm.Section.HEADINGS
-    //   - This is what we are already doing
-    let displaySections = null;
-    if (displaySectionsAs === "HEADINGS" || displaySectionsAs === "headings") {
-      displaySections = (
-        <SectionsWithHeadings
-          sections={sections}
-          submissions={submissions}
-          setSubmission={setSubmission}
-          addError={addError}
-          removeError={removeError}
-          errors={errors}
-        />
-      );
-    }
-    if (displaySectionsAs === "STEPS" || displaySectionsAs === "steps") {
-      displaySections = (
-        <SectionsWithSteps
-          sections={sections}
-          submissions={submissions}
-          setSubmission={setSubmission}
-          setCurrentStep={setCurrentStep}
-          currentStep={currentStep}
-          nextStep={nextStep}
-          prevStep={prevStep}
-          addError={addError}
-          removeError={removeError}
-          errors={errors}
-        />
-      );
-    }
-
-    const showCompletionContent = submitted ? form.completionContent : "";
-
+  // When we don't have this form in the backend
+  if (form.id === 0) {
     return (
       <div>
-        <form
-          className="pure-form pure-form-stacked"
-          onSubmit={e => e.preventDefault()}
+        <button
+          className="pure-button pure-button-primary"
+          onClick={() => getForm(1)}
         >
-          {displaySections}
-          <hr />
-          <p>{showCompletionContent}</p>
-          <button
-            className="pure-button pure-button-primary"
-            onClick={() =>
-              submitFormWithValidation(submitForm, form, submissions, errors)}
-          >
-            Submit
-          </button>
-        </form>
-        <hr />
+          GetForm(1)
+        </button>
+
+        <h2>There is no form for this id</h2>
       </div>
     );
   }
+
+  const sections = form.get("sections");
+
+  // displaySectionsAs:
+  // This determines how we show sections.
+  // - RespondToForm.Section.STEPS
+  //   - If this is chosen, we will show a single section at a time, and
+  //     'next/prev' buttons to move between sections
+  // - RespondToForm.Section.HEADINGS
+  //   - This is what we are already doing
+  let displaySections = null;
+  if (displaySectionsAs === "HEADINGS" || displaySectionsAs === "headings") {
+    displaySections = (
+      <SectionsWithHeadings
+        sections={sections}
+        submissions={submissions}
+        setSubmission={setSubmission}
+        addError={addError}
+        removeError={removeError}
+        errors={errors}
+      />
+    );
+  }
+  if (displaySectionsAs === "STEPS" || displaySectionsAs === "steps") {
+    displaySections = (
+      <SectionsWithSteps
+        sections={sections}
+        submissions={submissions}
+        setSubmission={setSubmission}
+        setCurrentStep={setCurrentStep}
+        currentStep={currentStep}
+        nextStep={nextStep}
+        prevStep={prevStep}
+        addError={addError}
+        removeError={removeError}
+        errors={errors}
+      />
+    );
+  }
+
+  const showCompletionContent = submitted ? form.completionContent : "";
+
+  return (
+    <div>
+      <form
+        className="pure-form pure-form-stacked"
+        onSubmit={e => e.preventDefault()}
+      >
+        {displaySections}
+        <hr />
+        <p>{showCompletionContent}</p>
+        <button
+          className="pure-button pure-button-primary"
+          onClick={() =>
+            submitFormWithValidation(submitForm, form, submissions, errors)}
+        >
+          Submit
+        </button>
+      </form>
+      <hr />
+    </div>
+  );
 }

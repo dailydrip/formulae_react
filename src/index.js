@@ -24,7 +24,7 @@ window.f = Form;
 ReactDOM.render(
   <Provider store={RespondToFormStore}>
     <div>
-      <RespondToForm formId={1} displaySectionsAs="HEADINGS" />
+      <RespondToForm formId={1} displaySectionsAs="STEPS" />
     </div>
   </Provider>,
   document.getElementById("respond-to-form")

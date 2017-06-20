@@ -19,6 +19,7 @@ const section1 = new SectionType({
 });
 
 const form = new FormType({
+  id: "1",
   sections: List([section2, section1])
 });
 
