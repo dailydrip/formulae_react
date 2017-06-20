@@ -109,6 +109,7 @@ function submitFormWithValidation(
 export default function RespondToForm(props: Props) {
   const {
     form,
+    formId,
     getForm,
     submissions,
     setSubmission,
@@ -124,8 +125,13 @@ export default function RespondToForm(props: Props) {
     submitted
   } = props;
 
+  if (formId !== 0 && form.id === 0) {
+    getForm(formId);
+  }
+
   // When we don't have this form in the backend
   if (form.id === 0) {
+    getForm();
     return (
       <div>
         <button

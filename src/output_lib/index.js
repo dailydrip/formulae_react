@@ -26,6 +26,12 @@ import {
   AddressType
 } from "./types";
 
+import {
+  decodeForm,
+  decodeSection,
+  decodeFormSubmissionResponse
+} from "./decoders.js";
+
 const Api = {
   Form: Form,
   FormSubmission: FormSubmission
@@ -54,11 +60,18 @@ const Types = {
   AddressType
 };
 
+const Decoders = {
+  decodeForm,
+  decodeSection,
+  decodeFormSubmissionResponse
+};
+
 export {
   RespondToForm,
   AdministerForm,
   ViewFormSubmission,
   Api,
   Stores,
-  Types
+  Types,
+  Decoders
 };
