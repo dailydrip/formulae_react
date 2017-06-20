@@ -9,6 +9,22 @@ import {
   AdministerFormStore,
   ViewFormSubmissionStore
 } from "./stores";
+import {
+  SectionType,
+  FormType,
+  FormResponseType,
+  FormSubmissionType,
+  FormSubmissionResponseType,
+  QuestionType,
+  QuestionDependencyType,
+  QuestionSubmissionType,
+  FormQuestionSubmissionType,
+  Model,
+  AdministerFormModel,
+  ViewFormSubmissionModel,
+  ChoiceType,
+  AddressType
+} from "./types";
 
 const Api = {
   Form: Form,
@@ -21,4 +37,28 @@ const Stores = {
   ViewFormSubmissionStore
 };
 
-export { RespondToForm, AdministerForm, ViewFormSubmission, Api, Stores };
+const Types = {
+  SectionType,
+  FormType,
+  FormResponseType,
+  FormSubmissionType,
+  FormSubmissionResponseType,
+  QuestionType,
+  QuestionDependencyType,
+  QuestionSubmissionType,
+  FormQuestionSubmissionType,
+  Model,
+  AdministerFormModel,
+  ViewFormSubmissionModel,
+  ChoiceType,
+  AddressType
+};
+
+export {
+  RespondToForm,
+  AdministerForm,
+  ViewFormSubmission,
+  Api,
+  Stores,
+  Types
+};
