@@ -9,6 +9,28 @@ import {
   AdministerFormStore,
   ViewFormSubmissionStore
 } from "./stores";
+import {
+  SectionType,
+  FormType,
+  FormResponseType,
+  FormSubmissionType,
+  FormSubmissionResponseType,
+  QuestionType,
+  QuestionDependencyType,
+  QuestionSubmissionType,
+  FormQuestionSubmissionType,
+  Model,
+  AdministerFormModel,
+  ViewFormSubmissionModel,
+  ChoiceType,
+  AddressType
+} from "./types";
+
+import {
+  decodeForm,
+  decodeSection,
+  decodeFormSubmissionResponse
+} from "./decoders.js";
 
 const Api = {
   Form: Form,
@@ -21,4 +43,35 @@ const Stores = {
   ViewFormSubmissionStore
 };
 
-export { RespondToForm, AdministerForm, ViewFormSubmission, Api, Stores };
+const Types = {
+  SectionType,
+  FormType,
+  FormResponseType,
+  FormSubmissionType,
+  FormSubmissionResponseType,
+  QuestionType,
+  QuestionDependencyType,
+  QuestionSubmissionType,
+  FormQuestionSubmissionType,
+  Model,
+  AdministerFormModel,
+  ViewFormSubmissionModel,
+  ChoiceType,
+  AddressType
+};
+
+const Decoders = {
+  decodeForm,
+  decodeSection,
+  decodeFormSubmissionResponse
+};
+
+export {
+  RespondToForm,
+  AdministerForm,
+  ViewFormSubmission,
+  Api,
+  Stores,
+  Types,
+  Decoders
+};

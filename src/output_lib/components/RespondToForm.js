@@ -14,8 +14,9 @@ import type {
 
 type Props = {
   form: FormType,
-  loadExampleForm: Function,
+  formId: number,
   getForm: Function,
+  loadExampleForm: Function,
   submissions: QuestionSubmissionsMapType,
   setSubmission: Function,
   setCurrentStep: Function,
@@ -108,7 +109,7 @@ function submitFormWithValidation(
 export default function RespondToForm(props: Props) {
   const {
     form,
-    loadExampleForm,
+    formId,
     getForm,
     submissions,
     setSubmission,
@@ -124,6 +125,27 @@ export default function RespondToForm(props: Props) {
     submitted
   } = props;
 
+  if (formId !== 0 && form.id === 0) {
+    getForm(formId);
+  }
+
+  // When we don't have this form in the backend
+  if (form.id === 0) {
+    getForm();
+    return (
+      <div>
+        <button
+          className="pure-button pure-button-primary"
+          onClick={() => getForm(1)}
+        >
+          GetForm(1)
+        </button>
+
+        <h2>There is no form for this id</h2>
+      </div>
+    );
+  }
+
   const sections = form.get("sections");
 
   // displaySectionsAs:
@@ -134,7 +156,7 @@ export default function RespondToForm(props: Props) {
   // - RespondToForm.Section.HEADINGS
   //   - This is what we are already doing
   let displaySections = null;
-  if (displaySectionsAs === "HEADINGS") {
+  if (displaySectionsAs === "HEADINGS" || displaySectionsAs === "headings") {
     displaySections = (
       <SectionsWithHeadings
         sections={sections}
@@ -146,7 +168,7 @@ export default function RespondToForm(props: Props) {
       />
     );
   }
-  if (displaySectionsAs === "STEPS") {
+  if (displaySectionsAs === "STEPS" || displaySectionsAs === "steps") {
     displaySections = (
       <SectionsWithSteps
         sections={sections}
@@ -183,15 +205,6 @@ export default function RespondToForm(props: Props) {
         </button>
       </form>
       <hr />
-      <button onClick={loadExampleForm}>Load Example Form</button>
-      <input type="text" onChange={e => getForm(e.target.value)} />
-      <button
-        onClick={() => {
-          getForm(1);
-        }}
-      >
-        Get API Form 1
-      </button>
     </div>
   );
 }

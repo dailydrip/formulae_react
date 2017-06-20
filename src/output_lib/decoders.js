@@ -126,7 +126,7 @@ function decodeQuestion(question: ApiQuestion): QuestionType {
 function decodeQuestionDependency(
   questionDependency: ApiQuestionDependency
 ): ?QuestionDependencyType {
-  if (questionDependency === null) {
+  if (questionDependency === null || questionDependency === undefined) {
     return null;
   }
   return new QuestionDependencyType({
