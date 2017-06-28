@@ -97,10 +97,11 @@ function submitFormWithValidation(
   submitForm: Function,
   form: FormType,
   submissions: QuestionSubmissionsMapType,
-  errors: Object
+  errors: Object,
+  apiKey
 ) {
   if (allRequiredQuestionsReplied(form, submissions) && errors.isEmpty()) {
-    submitForm(generateFormSubmission(form, submissions));
+    submitForm(apiKey, generateFormSubmission(form, submissions));
   } else if (!errors.isEmpty()) {
     console.log("There are erros in the form");
   } else {
@@ -179,7 +180,13 @@ export default function RespondToForm(props: Props) {
         <button
           className="pure-button pure-button-primary"
           onClick={() =>
-            submitFormWithValidation(submitForm, form, submissions, errors)}
+            submitFormWithValidation(
+              submitForm,
+              form,
+              submissions,
+              errors,
+              apiKey
+            )}
         >
           Submit
         </button>

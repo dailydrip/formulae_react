@@ -27,8 +27,8 @@ export const RespondToForm = connect(
           RespondToFormActions.setQuestionSubmission(key, value, questionType)
         );
       },
-      submitForm: formSubmission =>
-        dispatch(RespondToFormActions.submitForm(formSubmission)),
+      submitForm: (apiKey, formSubmission) =>
+        dispatch(RespondToFormActions.submitForm(apiKey, formSubmission)),
       nextStep: () => dispatch(RespondToFormActions.nextStep()),
       prevStep: () => dispatch(RespondToFormActions.prevStep()),
       addError: (id, message) =>

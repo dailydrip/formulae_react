@@ -1,7 +1,7 @@
 // @flow
 
-import createForm from "./api/Form";
+import createFormApi from "./api/Form";
 import Section from "./api/Section";
-import FormSubmission from "./api/FormSubmission";
+import createFormSubmissionApi from "./api/FormSubmission";
 
-export { createForm, Section, FormSubmission };
+export { createFormApi, Section, createFormSubmissionApi };
