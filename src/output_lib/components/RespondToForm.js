@@ -27,7 +27,8 @@ type Props = {
   addError: Function,
   removeError: Function,
   errors: Object,
-  submitted: boolean
+  submitted: boolean,
+  apiKey: string
 };
 
 function generateFormSubmission(
@@ -123,7 +124,8 @@ export default function RespondToForm(props: Props) {
     addError,
     removeError,
     errors,
-    submitted
+    submitted,
+    apiKey
   } = props;
   const sections = form.get("sections");
 
@@ -165,7 +167,6 @@ export default function RespondToForm(props: Props) {
   }
 
   const showCompletionContent = submitted ? form.completionContent : "";
-
   return (
     <div>
       <form
@@ -188,7 +189,7 @@ export default function RespondToForm(props: Props) {
       <input type="text" onChange={e => getForm(e.target.value)} />
       <button
         onClick={() => {
-          getForm(1);
+          getForm(apiKey, 1);
         }}
       >
         Get API Form 1

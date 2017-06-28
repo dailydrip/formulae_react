@@ -1,4 +1,4 @@
-import { Form, FormSubmission } from "../api";
+import { createForm, FormSubmission } from "../api";
 import { List } from "immutable";
 
 function setQuestionSubmission(key, values: List<string>, questionType) {
@@ -18,8 +18,9 @@ function loadExampleForm() {
   };
 }
 
-function getForm(id) {
+function getForm(apiKey, id) {
   return dispatch => {
+    const Form = createForm(apiKey);
     Form.get(id).then(formType => dispatch(gotForm(formType)));
   };
 }
