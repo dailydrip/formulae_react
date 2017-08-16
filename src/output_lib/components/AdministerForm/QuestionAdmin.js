@@ -1,28 +1,11 @@
 // @flow
 
 import React from "react";
-import {
-  QuestionDependencyType,
-  SectionType,
-  QuestionType,
-  AddressType
-} from "../../types";
+import { QuestionDependencyType, SectionType, QuestionType } from "../../types";
 import ChoicesAdmin from "./ChoicesAdmin";
 import QuestionDependencyAdmin from "./QuestionDependencyAdmin";
 import { DragTypes } from "./DragTypes";
 import { DragSource, DropTarget } from "react-dnd";
-import {
-  Text,
-  String,
-  Boolean,
-  Address,
-  Content,
-  Select,
-  MultiSelect,
-  Checkboxes,
-  Radio
-} from "../RespondToForm/widgets";
-import { List } from "immutable";
 
 const questionSource = {
   beginDrag(props) {
@@ -350,18 +333,6 @@ function renderQuestionAdminType(
         {validateAs}
         {requiredField}
         {questionDependencies}
-        <div>
-          <h3>Preview</h3>
-          <String
-            id={question.id}
-            content={question.content}
-            placeholder={question.placeholder}
-            onChange={() => {}}
-            errorMessage=""
-            required={false}
-            value=""
-          />
-        </div>
       </div>
     );
   }
@@ -372,16 +343,6 @@ function renderQuestionAdminType(
         {descriptionTextArea}
         {placeholder}
         {requiredField}
-        <div>
-          <h3>Preview</h3>
-          <Text
-            id={question.id}
-            content={question.content}
-            placeholder={question.placeholder}
-            onChange={() => {}}
-            value=""
-          />
-        </div>
       </div>
     );
   }
@@ -391,17 +352,6 @@ function renderQuestionAdminType(
       <div>
         {descriptionTextArea}
         {requiredField}
-        <div>
-          <h3>Preview</h3>
-          <Boolean
-            id={question.id}
-            content={question.content}
-            placeholder={question.placeholder}
-            onChange={() => {}}
-            value=""
-            label={question.label}
-          />
-        </div>
       </div>
     );
   }
@@ -411,16 +361,6 @@ function renderQuestionAdminType(
       <div>
         {descriptionTextArea}
         {requiredField}
-        <div>
-          <h3>Preview</h3>
-          <Address
-            id={question.id}
-            content={question.content}
-            placeholder={question.placeholder}
-            value={new AddressType()}
-            onChange={() => {}}
-          />
-        </div>
       </div>
     );
   }
@@ -429,10 +369,6 @@ function renderQuestionAdminType(
     return (
       <div>
         {descriptionTextArea}
-        <div>
-          <h3>Preview</h3>
-          <Content content={question.content} />
-        </div>
       </div>
     );
   }
@@ -460,16 +396,6 @@ function renderQuestionAdminType(
           setMetadataFieldValue={setMetadataFieldValue}
           reorderChoice={(choiceId, order) => reorderChoice(choiceId, order)}
         />
-        <div>
-          <h4>Preview</h4>
-          <Select
-            content={question.content}
-            value=""
-            id={question.id}
-            onChange={() => {}}
-            choices={question.choices}
-          />
-        </div>
       </div>
     );
   }
@@ -495,17 +421,6 @@ function renderQuestionAdminType(
           setMetadataFieldValue={setMetadataFieldValue}
           reorderChoice={(choiceId, order) => reorderChoice(choiceId, order)}
         />
-        <div>
-          <h4>Preview</h4>
-          <MultiSelect
-            content={question.content}
-            id={question.id}
-            value=""
-            onChange={() => {}}
-            choices={question.choices}
-            values={new List([])}
-          />
-        </div>
       </div>
     );
   }
@@ -530,17 +445,6 @@ function renderQuestionAdminType(
           setMetadataFieldValue={setMetadataFieldValue}
           reorderChoice={(choiceId, order) => reorderChoice(choiceId, order)}
         />
-        <div>
-          <h4>Preview</h4>
-          <Checkboxes
-            content={question.content}
-            id={question.id}
-            value=""
-            label=""
-            onChange={() => {}}
-            choices={question.choices}
-          />
-        </div>
       </div>
     );
   }
@@ -565,16 +469,6 @@ function renderQuestionAdminType(
           setMetadataFieldValue={setMetadataFieldValue}
           reorderChoice={(choiceId, order) => reorderChoice(choiceId, order)}
         />
-        <div>
-          <h4>Preview</h4>
-          <Radio
-            name={`radio-${question.id}`}
-            content={question.content}
-            value={""}
-            onChange={() => {}}
-            choices={question.choices}
-          />
-        </div>
       </div>
     );
   }
