@@ -6,6 +6,7 @@ import ChoicesAdmin from "./ChoicesAdmin";
 import QuestionDependencyAdmin from "./QuestionDependencyAdmin";
 import { DragTypes } from "./DragTypes";
 import { DragSource, DropTarget } from "react-dnd";
+import getFriendlyQuestionType from "./FriendlyQuestionTypes";
 
 const questionSource = {
   beginDrag(props) {
@@ -97,8 +98,6 @@ function renderQuestionType(props) {
   const makeAddress = () => setQuestionType(section.id, question.id, "address");
   const makeContent = () => setQuestionType(section.id, question.id, "content");
   const makeSelect = () => setQuestionType(section.id, question.id, "select");
-  const makeMultiSelect = () =>
-    setQuestionType(section.id, question.id, "multiselect");
   const makeCheckboxes = () =>
     setQuestionType(section.id, question.id, "checkboxes");
   const makeRadio = () => setQuestionType(section.id, question.id, "radio");
@@ -108,39 +107,35 @@ function renderQuestionType(props) {
       <div>
         <button className="pure-button" onClick={makeString}>
           <i className="fa fa-cog" />
-          String
+          {getFriendlyQuestionType("string")}
         </button>
         <button className="pure-button" onClick={makeText}>
           <i className="fa fa-cog" />
-          Text
+          {getFriendlyQuestionType("text")}
         </button>
         <button className="pure-button" onClick={makeBoolean}>
           <i className="fa fa-cog" />
-          Boolean
+          {getFriendlyQuestionType("boolean")}
         </button>
         <button className="pure-button" onClick={makeAddress}>
           <i className="fa fa-cog" />
-          Address
+          {getFriendlyQuestionType("address")}
         </button>
         <button className="pure-button" onClick={makeContent}>
           <i className="fa fa-cog" />
-          Content
+          {getFriendlyQuestionType("content")}
         </button>
         <button className="pure-button" onClick={makeSelect}>
           <i className="fa fa-cog" />
-          Select
-        </button>
-        <button className="pure-button" onClick={makeMultiSelect}>
-          <i className="fa fa-cog" />
-          Multi-Select
+          {getFriendlyQuestionType("select")}
         </button>
         <button className="pure-button" onClick={makeCheckboxes}>
           <i className="fa fa-cog" />
-          Checkboxes
+          {getFriendlyQuestionType("checkboxes")}
         </button>
         <button className="pure-button" onClick={makeRadio}>
           <i className="fa fa-cog" />
-          Radio
+          {getFriendlyQuestionType("radio")}
         </button>
       </div>
     );
@@ -175,7 +170,7 @@ function renderQuestionFields(props) {
     <fieldset className={className}>
       <header>
         {connectDragSource(<i className="fa fa-bars grippy" />)}
-        <small>{question.type}</small>
+        <small>{getFriendlyQuestionType(question.type)}</small>
         <input
           type="text"
           className="labelinput"
