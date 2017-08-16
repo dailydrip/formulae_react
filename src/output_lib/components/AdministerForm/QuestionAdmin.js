@@ -7,6 +7,7 @@ import QuestionDependencyAdmin from "./QuestionDependencyAdmin";
 import { DragTypes } from "./DragTypes";
 import { DragSource, DropTarget } from "react-dnd";
 import getFriendlyQuestionType from "./FriendlyQuestionTypes";
+import Confirm from "./Confirm";
 
 const questionSource = {
   beginDrag(props) {
@@ -187,7 +188,12 @@ function renderQuestionFields(props) {
             className={`expand fa ${editActive}`}
           />
           <i
-            onClick={e => deleteQuestion(section.id, question.id)}
+            onClick={e =>
+              Confirm(
+                "Are you sure?",
+                () => deleteQuestion(section.id, question.id),
+                () => {}
+              )}
             className="fa fa-times-circle-o delete"
           />
         </div>
